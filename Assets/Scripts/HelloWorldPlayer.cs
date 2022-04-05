@@ -97,6 +97,7 @@ namespace HelloWorld
 
         public void Move()
         {
+            //SubmitPositionRequestServerRpc();
             if (NetworkManager.Singleton.IsServer)
             {
                 var randomPosition = GetRandomPositionOnPlane();
@@ -106,17 +107,17 @@ namespace HelloWorld
             else
             {
                 SubmitPositionRequestServerRpc();
-            }
+            } 
         }
 
         [ServerRpc] //SIEMPRE TIPO VOID por tanto no devuelve nada
-        void SubmitPositionRequestServerRpc(ServerRpcParams rpcParams = default)
+        public void SubmitPositionRequestServerRpc(ServerRpcParams rpcParams = default)
         {
             Position.Value = GetRandomPositionOnPlane(); //La posicion de aquien llamo el server rpc
         }
 
          [ServerRpc] //SIEMPRE TIPO VOID
-        void SubmitColorRequestServerRpc(bool primeravez = false, ServerRpcParams rpcParams = default)
+        public void SubmitColorRequestServerRpc(bool primeravez = false, ServerRpcParams rpcParams = default)
         {
             //CREA DOS VARIABLES el color asignado 
             Color oldColor = colorJugador.Value;    // color antiguo del jugador
@@ -147,9 +148,9 @@ namespace HelloWorld
 
         void Update()
         {
-            render.material.SetColor("Color", colorJugador.Value); //OnValueChanged para actualizar el valor
-
-        //    transform.position = Posicion.Value; 
+           render.material.SetColor("Color", colorJugador.Value); //OnValueChanged para actualizar el valor
+           // render.material.color = colorJugador.Value;
+           //transform.position = Posicion.Value; 
         }
     }
 }
